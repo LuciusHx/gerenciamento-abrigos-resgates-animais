@@ -1,4 +1,4 @@
-package servico;
+package servicos;
 
 public class RelatorioServico {
     public String relatorioSaude(){
