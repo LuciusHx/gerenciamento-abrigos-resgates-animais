@@ -3,7 +3,7 @@ import java.time.LocalDate;
 import java.util.List;
 import excecao.TratamentoCriticoException;
 
-public class Animal {
+public abstract class Animal {
     private String raca;
     private String nome;
     private int idade;
