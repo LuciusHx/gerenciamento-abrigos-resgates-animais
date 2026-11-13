@@ -8,10 +8,11 @@ public class OutroAnimal extends Animal{
     
     public OutroAnimal (String especie, String nome, String raca, int idade, Porte porte, EstadoSaude estadoSaude, LocalDate dataResgate){
         super(nome, raca, idade, porte, estadoSaude, dataResgate);
+        this.especie = especie;
         if(especie == null || especie.isBlank()){
             throw new DadoInvalidoException("A especie do animal não pode ser vazia.");
         }
-        this.especie = especie;
+        
     }
 
     @Override
