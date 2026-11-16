@@ -1,6 +1,7 @@
 package models.adocao;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import contrato.Notificavel;
@@ -20,5 +21,19 @@ public class Adotante extends Pessoa implements Notificavel {
     @Override
     public void receberNotificacao(Notificacao n){
         caixaDeEntrada.add(n);
+    }
+
+    public String getEndereco(){
+        return this.endereco;
+    }
+
+    public void setEndereco(String endereco){
+        validarString(endereco, "endereço");
+        this.endereco = endereco;
+    }
+
+    public List<Notificacao> getNotificacoes(){
+        List<Notificacao> caixaDeEntradaImutavel = Collections.unmodifiableList(caixaDeEntrada);
+        return caixaDeEntradaImutavel;
     }
 }
