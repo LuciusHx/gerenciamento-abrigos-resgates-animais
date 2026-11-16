@@ -21,6 +21,8 @@ public abstract class Usuario extends Pessoa implements Notificavel{
     public Usuario(String nome, String cpf, String email, String telefone, String login, String senha){
         super(nome, cpf, email, telefone);
 
+        validarString(login, "login");
+        validarString(senha, "senha");
         this.id = ++contador;
         this.login = login;
         this.senha = senha;
@@ -41,10 +43,12 @@ public abstract class Usuario extends Pessoa implements Notificavel{
     }
 
     public void setLogin(String login){
+        validarString(login, "login");
         this.login = login;
     }
 
     public void setSenha(String senhaAtual, String novaSenha) {
+        validarString(novaSenha, "senha");
         if (this.senha.equals(senhaAtual)) {
             this.senha = novaSenha;
         } else {

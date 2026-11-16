@@ -1,5 +1,7 @@
 package models.pessoa;
 
+import excecao.DadoInvalidoException;
+
 public abstract class Pessoa {
     private String nome;
     private final String cpf;
@@ -7,9 +9,10 @@ public abstract class Pessoa {
     private String telefone;
 
     public Pessoa(String nome, String cpf, String email, String telefone){
-        // if(nome.isEmpty() || cpf.isEmpty() || email.isEmpty() || telefone.isEmpty()){
-            // fazer quando o bern fizer o tratamento de DadoInvalido
-        // }
+        validarString(nome, "nome");
+        validarString(cpf, "cpf");
+        validarString(email, "email");
+        validarString(telefone, "telefone");
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
@@ -21,6 +24,7 @@ public abstract class Pessoa {
     }
 
     public void setNome(String nome) {
+        validarString(nome, "nome");
         this.nome = nome;
     }
 
@@ -33,6 +37,7 @@ public abstract class Pessoa {
     }
 
     public void setEmail(String email) {
+        validarString(email, "email");
         this.email = email;
     }
 
@@ -41,6 +46,15 @@ public abstract class Pessoa {
     }
 
     public void setTelefone(String telefone) {
+        validarString(telefone, "telefone");
         this.telefone = telefone;
+        
+    }
+
+    protected final void validarString(String s, String nomeDoCampo){
+        //trim é pra tirar os espaços
+        if(s == null || s.trim().isEmpty()){
+            throw new DadoInvalidoException(String.format("O dado %s é inválido.", nomeDoCampo));
+        }
     }
 }
