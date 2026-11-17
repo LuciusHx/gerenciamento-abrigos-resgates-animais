@@ -7,6 +7,7 @@ import java.util.List;
 import contrato.Notificavel;
 import models.notificacao.Notificacao;
 import models.pessoa.Pessoa;
+import util.Validacoes;
 
 public class Adotante extends Pessoa implements Notificavel {
     private String endereco;
@@ -14,7 +15,7 @@ public class Adotante extends Pessoa implements Notificavel {
 
     public Adotante(String nome, String cpf, String email, String telefone, String endereco){
         super(nome, cpf, email, telefone);
-        validarString(endereco, "endereço");
+        Validacoes.validarString(endereco, "endereço");
         this.endereco = endereco;
     }
 
@@ -28,7 +29,7 @@ public class Adotante extends Pessoa implements Notificavel {
     }
 
     public void setEndereco(String endereco){
-        validarString(endereco, "endereço");
+        Validacoes.validarString(endereco, "endereço");
         this.endereco = endereco;
     }
 
