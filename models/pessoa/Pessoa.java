@@ -1,5 +1,7 @@
 package models.pessoa;
 
+import util.Validacoes;
+
 public abstract class Pessoa {
     private String nome;
     private final String cpf;
@@ -7,9 +9,10 @@ public abstract class Pessoa {
     private String telefone;
 
     public Pessoa(String nome, String cpf, String email, String telefone){
-        // if(nome.isEmpty() || cpf.isEmpty() || email.isEmpty() || telefone.isEmpty()){
-            // fazer quando o bern fizer o tratamento de DadoInvalido
-        // }
+        Validacoes.validarString(nome, "nome");
+        Validacoes.validarString(cpf, "cpf");
+        Validacoes.validarString(email, "email");
+        Validacoes.validarString(telefone, "telefone");
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
@@ -21,6 +24,7 @@ public abstract class Pessoa {
     }
 
     public void setNome(String nome) {
+        Validacoes.validarString(nome, "nome");
         this.nome = nome;
     }
 
@@ -33,6 +37,7 @@ public abstract class Pessoa {
     }
 
     public void setEmail(String email) {
+        Validacoes.validarString(email, "email");
         this.email = email;
     }
 
@@ -41,6 +46,10 @@ public abstract class Pessoa {
     }
 
     public void setTelefone(String telefone) {
+        Validacoes.validarString(telefone, "telefone");
         this.telefone = telefone;
+        
     }
+
+    
 }

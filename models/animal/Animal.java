@@ -2,6 +2,7 @@ package models.animal;
 import java.time.LocalDate;
 import java.util.List;
 import excecao.TratamentoCriticoException;
+import util.Validacoes;
 import excecao.DadoInvalidoException;
 
 public abstract class Animal {
@@ -21,12 +22,9 @@ public abstract class Animal {
 
     
     protected Animal (String nome, String raca, int idade, Porte porte, EstadoSaude estadoSaude, LocalDate dataResgate){
-        if(nome == null || nome.isBlank()){
-            throw new DadoInvalidoException("O nome do animal não pode ser vazio.");
-        }
-        if(raca == null || raca.isBlank()){
-            throw new DadoInvalidoException("A raça do animal não pode ser vazia.");
-        }
+        Validacoes.validarString(nome, "nome");
+        Validacoes.validarString(raca, "raça");
+        
         if(idade < 0){
             throw new DadoInvalidoException("A idade do animal não pode ser inferior a zero");
         }
@@ -56,7 +54,6 @@ public abstract class Animal {
     }
 
     
-    //polimofirsmo:
     public abstract String getEspecie();
     public abstract List<String> getVacinasObrigatorias();
 
@@ -68,7 +65,6 @@ public abstract class Animal {
     public boolean jaFoiAdotado(){
         return adotadoAlgumaVez;
     }
-
 
     public void marcarComoAdotado(){
         if(!isDisponivel()){
