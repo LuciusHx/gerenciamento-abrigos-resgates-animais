@@ -38,7 +38,7 @@ public class Voluntario extends Usuario {
 
     public void adicionarAnimalResponsavel(Animal animal){
         if(animal == null){
-            new DadoInvalidoException("Dado inválido.");
+            throw new DadoInvalidoException("Dado inválido.");
         }
 
         if(animais.contains(animal)){
