@@ -1,6 +1,9 @@
 package models.notificacao;
 import java.time.LocalDateTime;
 
+import excecao.DadoInvalidoException;
+import util.Validacoes;
+
 public class Notificacao {
     private final int id;
     private static int contador = 0;
@@ -10,7 +13,11 @@ public class Notificacao {
 
 
     public Notificacao(TipoNotificacao tipo, String mensagem){
+        if(tipo == null){
+            throw new DadoInvalidoException("O tipo é inválido.");
+        }
         this.tipo = tipo;
+        Validacoes.validarString(mensagem, "notificação");
         this.mensagem = mensagem;
         this.data = LocalDateTime.now();
     

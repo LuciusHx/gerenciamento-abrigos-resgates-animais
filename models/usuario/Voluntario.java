@@ -42,7 +42,7 @@ public class Voluntario extends Usuario {
         }
 
         if(animais.contains(animal)){
-            new DadoInvalidoException("Esse animal já possui cuidador.");
+            throw new DadoInvalidoException("Esse animal já possui cuidador.");
         }
         
         animais.add(animal);
