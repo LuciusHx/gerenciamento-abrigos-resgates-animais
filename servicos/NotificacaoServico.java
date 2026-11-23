@@ -27,6 +27,18 @@ public class NotificacaoServico {
         inscritos.add(n);
     }
 
+    public void desinscrever(Notificavel n){
+        if(n == null){
+            throw new DadoInvalidoException("O dado é nulo e inválido.");
+        }
+
+        if(!inscritos.contains(n)){
+            throw new DadoInvalidoException("Destinatário não está inscrito");
+        }
+        
+        inscritos.remove(n);
+    }
+
     public void notificar(Notificavel destino, TipoNotificacao tipo, String mensagem){
         if(destino == null){
             throw new DadoInvalidoException("O destino é inválido");

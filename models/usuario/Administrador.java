@@ -1,6 +1,7 @@
 package models.usuario;
 
 import contrato.EmissorRelatorio;
+import models.pessoa.Perfil;
 import servicos.RelatorioServico;
 
 public class Administrador extends Usuario implements EmissorRelatorio{
@@ -40,4 +41,8 @@ public class Administrador extends Usuario implements EmissorRelatorio{
         return servico.relatorioGeral();
     }
 
+    @Override
+    public Perfil getPerfil() {
+        return Perfil.ADMINISTRADOR;
+    }
 }

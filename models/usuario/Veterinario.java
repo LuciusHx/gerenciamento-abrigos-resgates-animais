@@ -1,6 +1,7 @@
 package models.usuario;
 
 import contrato.EmissorRelatorio;
+import models.pessoa.Perfil;
 import servicos.RelatorioServico;
 import util.Validacoes;
 
@@ -48,5 +49,10 @@ public class Veterinario extends Usuario implements EmissorRelatorio{
     @Override 
     public String emitirRelatorio(RelatorioServico servico){
         return servico.relatorioSaude();
+    }
+
+    @Override
+    public Perfil getPerfil() {
+        return Perfil.VETERINARIO;
     }
 }
