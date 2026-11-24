@@ -43,15 +43,18 @@ public class AnimalServico {
         
     }
 
-    public void cadastrar(Usuario executor, Animal animal) throws PermissaoNegadaException{
-        if(animal == null) throw new DadoInvalidoException("O animal não pode estar vazio.");
-        animais.add(animal);
+    public void cadastrar(Usuario executor, Animal animal) throws PermissaoNegadaException {
+        exigirPermissao(executor);
 
-        if(animais.contains(animal)){
+        if (animal == null) {
+            throw new DadoInvalidoException("O animal não pode ser vazio.");
+        }
+        if (animais.contains(animal)) {
             throw new DadoInvalidoException("Esse animal já está cadastrado.");
         }
-        
-        notificacaoServico.notificarTodos(TipoNotificacao.NOVO_ANIMAL, "novo animal no abrigo: " + animal.getNome() + " (" + animal.getEspecie() + ").");
+
+        animais.add(animal);
+        notificacaoServico.notificarTodos(TipoNotificacao.NOVO_ANIMAL, "Novo animal no abrigo: " + animal.getNome() + " (" + animal.getEspecie() + ").");
     }
 
     public void editar(Usuario executor, int id, String nome, String raca, int idade, Porte porte)
