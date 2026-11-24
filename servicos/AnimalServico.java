@@ -2,8 +2,11 @@ package servicos;
 
 import models.animal.Animal;
 import models.animal.Porte;
+import models.animal.StatusAdocao;
 import models.notificacao.TipoNotificacao;
 import models.usuario.Usuario;
+
+import util.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,11 +44,13 @@ public class AnimalServico {
     }
 
     public void cadastrar(Usuario executor, Animal animal) throws PermissaoNegadaException{
+        if(animal == null) throw new DadoInvalidoException("O animal não pode estar vazio.");
+        animais.add(animal);
+
         if(animais.contains(animal)){
             throw new DadoInvalidoException("Esse animal já está cadastrado.");
         }
-        if(animal == null) throw new DadoInvalidoException("O animal não pode estar vazio.");
-        animais.add(animal);
+        
         notificacaoServico.notificarTodos(TipoNotificacao.NOVO_ANIMAL, "novo animal no abrigo: " + animal.getNome() + " (" + animal.getEspecie() + ").");
     }
 
@@ -64,6 +69,59 @@ public class AnimalServico {
 
         if(animal.jaFoiAdotado()) throw new RemocaoNaoPermitidaException("O animal ja foi adotado.");
         animais.remove(animal);
+    }
+
+    public List<Animal> buscarPorNome(String nome){
+        Validacoes.validarString(nome,"nome");
+
+        String busca = nome.toLowerCase();
+        List<Animal> resultado = new ArrayList<>();
+
+        for (Animal animal : animais) {
+            if (animal.getNome().toLowerCase().contains(busca)){
+                resultado.add(animal);
+            }
+        }
+        return Collections.unmodifiableList(resultado);
+    }
+
+    public List<Animal> listarDisponiveis(){
+        List<Animal> resultado = new ArrayList<>();
+
+        for (Animal animal : animais) {
+            if (animal.isDisponivel()){
+                resultado.add(animal);
+            }
+        }
+        return Collections.unmodifiableList(resultado);
+    }
+
+    
+    public List<Animal> filtrar(String especie, Porte porte, StatusAdocao status) {
+        List<Animal> resultado = new ArrayList<>();
+
+        for (Animal animal : animais) {
+            boolean especieOk = especie == null || animal.getEspecie().equalsIgnoreCase(especie);
+            boolean porteOk = porte == null || animal.getPorte() == porte;
+            boolean statusOk = status == null || animal.getStatusAdocao() == status;
+
+            if (especieOk && porteOk && statusOk) {
+                resultado.add(animal);
+            }
+        }
+        return Collections.unmodifiableList(resultado);
+    }
+
+    public List<Animal> filtrar(String especie) {
+        return filtrar(especie, null, null);
+    }
+
+    public List<Animal> filtrar(Porte porte) {
+        return filtrar(null, porte, null);
+    }
+
+    public List<Animal> filtrar(StatusAdocao status) {
+        return filtrar(null, null, status);
     }
 
     public List<Animal> getAnimais(){
