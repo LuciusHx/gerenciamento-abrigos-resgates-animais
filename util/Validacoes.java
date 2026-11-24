@@ -3,6 +3,9 @@ package util;
 import excecao.DadoInvalidoException;
 
 public final class Validacoes {
+
+    private Validacoes(){}
+    
     public static void validarString(String s, String nomeDoCampo){
         //trim é pra tirar os espaços
         if(s == null || s.trim().isEmpty()){
