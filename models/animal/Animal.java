@@ -60,8 +60,6 @@ public abstract class Animal {
     }   
 
     
-
-    
     public abstract String getEspecie();
     public abstract List<String> getVacinasObrigatorias();
 
@@ -88,6 +86,18 @@ public abstract class Animal {
         }
         this.statusAdocao = StatusAdocao.DISPONIVEL;
         
+    }
+
+    public void definirEstadoSaude(EstadoSaude novoEstado) {
+        if (novoEstado == null) {
+            throw new DadoInvalidoException("O estado de saúde não pode ser vazio.");
+        }
+        this.estadoSaude = novoEstado;
+
+    // animal que vira crítico deixa de estar disponível
+        if (novoEstado == EstadoSaude.CRITICO && statusAdocao == StatusAdocao.DISPONIVEL) {
+            this.statusAdocao = StatusAdocao.INDISPONIVEL;
+        }
     }
 
     public void atualizarDados(String nome, String raca, int idade, Porte porte) {
