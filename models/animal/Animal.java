@@ -2,7 +2,6 @@ package models.animal;
 import java.time.LocalDate;
 import java.util.List;
 import excecao.TratamentoCriticoException;
-import util.Validacoes;
 import excecao.DadoInvalidoException;
 
 public abstract class Animal {
