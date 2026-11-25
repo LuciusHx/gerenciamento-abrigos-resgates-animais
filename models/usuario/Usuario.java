@@ -78,4 +78,5 @@ public abstract class Usuario extends Pessoa implements Notificavel{
     public boolean podeGerenciarAnimais(){ return false; }
     public boolean podeGerenciarUsuarios(){ return false; }
     public boolean podeGerenciarAtividades(){ return false; }
+    public boolean podePublicarAvisos(){ return false; }
 }
