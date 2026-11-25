@@ -35,7 +35,10 @@ public class Administrador extends Usuario implements EmissorRelatorio{
     public boolean podeGerenciarAnimais(){ return true; }
     @Override
     public boolean podeGerenciarUsuarios(){ return true; }
-
+    
+    @Override
+    public boolean podeGerenciarAtividades(){ return true; }
+    
     @Override 
     public String emitirRelatorio(RelatorioServico servico){
         return servico.relatorioGeral();
@@ -45,4 +48,5 @@ public class Administrador extends Usuario implements EmissorRelatorio{
     public Perfil getPerfil() {
         return Perfil.ADMINISTRADOR;
     }
+
 }
