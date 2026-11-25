@@ -1,17 +1,21 @@
 package models.usuario;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import excecao.DadoInvalidoException;
 import models.animal.Animal;
+import models.atividade.Atividade;
 import models.pessoa.Perfil;
+import util.Constantes;
 
 
 public class Voluntario extends Usuario {
     
     private final List<Animal> animais = new ArrayList<>();
+    private final List<Atividade> historicoParticipacoes = new ArrayList<>();
     
     public Voluntario(String nome, String cpf, String email, String telefone, String login, String senha){
         super(nome, cpf, email, telefone, login, senha);
@@ -57,5 +61,32 @@ public class Voluntario extends Usuario {
     @Override
     public Perfil getPerfil() {
         return Perfil.VOLUNTARIO;
+    }
+
+    public void registrarParticipacao(Atividade atividade) {
+        if (atividade == null) {
+            throw new DadoInvalidoException("Atividade inválida.");
+        }
+        if (historicoParticipacoes.contains(atividade)) {
+            throw new DadoInvalidoException("Participação em " + atividade.getTitulo() + " já registrada.");
+        }
+        historicoParticipacoes.add(atividade);
+    }
+
+    public List<Atividade> getHistoricoParticipacoes() {
+        return Collections.unmodifiableList(historicoParticipacoes);
+    }
+
+    // ativo = participou de alguma atividade nos últimos DIAS_VOLUNTARIO_ATIVO dias
+    public boolean isAtivo() {
+        LocalDate hoje = LocalDate.now();
+        LocalDate limite = hoje.minusDays(Constantes.DIAS_VOLUNTARIO_ATIVO);
+        for (Atividade atividade : historicoParticipacoes) {
+            LocalDate data = atividade.getData();
+            if (!data.isBefore(limite) && !data.isAfter(hoje)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

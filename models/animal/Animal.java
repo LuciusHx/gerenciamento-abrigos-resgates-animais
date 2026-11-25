@@ -2,8 +2,9 @@ package models.animal;
 import java.time.LocalDate;
 import java.util.List;
 import excecao.TratamentoCriticoException;
-import util.Validacoes;
+import models.saude.HistoricoMedico;
 import excecao.DadoInvalidoException;
+import models.saude.HistoricoMedico;
 
 public abstract class Animal {
 
@@ -19,6 +20,8 @@ public abstract class Animal {
     private StatusAdocao statusAdocao;
     private final LocalDate dataResgate;
     private boolean adotadoAlgumaVez = false;
+
+    private final HistoricoMedico historicoMedico = new HistoricoMedico();
 
     
 
@@ -57,8 +60,6 @@ public abstract class Animal {
     }   
 
     
-
-    
     public abstract String getEspecie();
     public abstract List<String> getVacinasObrigatorias();
 
@@ -85,6 +86,18 @@ public abstract class Animal {
         }
         this.statusAdocao = StatusAdocao.DISPONIVEL;
         
+    }
+
+    public void definirEstadoSaude(EstadoSaude novoEstado) {
+        if (novoEstado == null) {
+            throw new DadoInvalidoException("O estado de saúde não pode ser vazio.");
+        }
+        this.estadoSaude = novoEstado;
+
+    // animal que vira crítico deixa de estar disponível
+        if (novoEstado == EstadoSaude.CRITICO && statusAdocao == StatusAdocao.DISPONIVEL) {
+            this.statusAdocao = StatusAdocao.INDISPONIVEL;
+        }
     }
 
     public void atualizarDados(String nome, String raca, int idade, Porte porte) {
@@ -130,6 +143,10 @@ public abstract class Animal {
     public LocalDate getDataResgate(){
         return dataResgate;
     }
+
+    public HistoricoMedico getHistoricoMedico() {
+        return historicoMedico;
+    }   
 
     @Override
     public String toString(){
