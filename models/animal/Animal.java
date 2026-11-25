@@ -2,7 +2,9 @@ package models.animal;
 import java.time.LocalDate;
 import java.util.List;
 import excecao.TratamentoCriticoException;
+import models.saude.HistoricoMedico;
 import excecao.DadoInvalidoException;
+import models.saude.HistoricoMedico;
 
 public abstract class Animal {
 
@@ -18,6 +20,8 @@ public abstract class Animal {
     private StatusAdocao statusAdocao;
     private final LocalDate dataResgate;
     private boolean adotadoAlgumaVez = false;
+
+    private final HistoricoMedico historicoMedico = new HistoricoMedico();
 
     
 
@@ -129,6 +133,10 @@ public abstract class Animal {
     public LocalDate getDataResgate(){
         return dataResgate;
     }
+
+    public HistoricoMedico getHistoricoMedico() {
+        return historicoMedico;
+    }   
 
     @Override
     public String toString(){
