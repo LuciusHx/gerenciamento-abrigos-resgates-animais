@@ -1,6 +1,7 @@
 package models.usuario;
 
 import models.notificacao.Notificacao;
+import models.pessoa.Perfil;
 import models.pessoa.Pessoa;
 import util.Validacoes;
 import excecao.SenhaIncorretaException;
@@ -69,6 +70,8 @@ public abstract class Usuario extends Pessoa implements Notificavel{
     }
 
     public abstract void exibirMenu();
+
+    public abstract Perfil getPerfil();
 
     public boolean podeAprovarAdocao(){ return false;}
     public boolean podeAlterarDadosMedicos(){ return false;}

@@ -21,20 +21,11 @@ public abstract class Animal {
     private boolean adotadoAlgumaVez = false;
 
     
-    protected Animal (String nome, String raca, int idade, Porte porte, EstadoSaude estadoSaude, LocalDate dataResgate){
-        Validacoes.validarString(nome, "nome");
-        Validacoes.validarString(raca, "raça");
-        
-        if(idade < 0){
-            throw new DadoInvalidoException("A idade do animal não pode ser inferior a zero");
-        }
-        if(porte == null || estadoSaude == null){
-            throw new DadoInvalidoException("O porte e o estado de saúde não podem estar vazios.");
-        }
-        if(dataResgate == null || dataResgate.isAfter(LocalDate.now())){
-            throw new DadoInvalidoException("Data inválida.");
-        }
 
+    
+    protected Animal (String nome, String raca, int idade, Porte porte, EstadoSaude estadoSaude, LocalDate dataResgate){
+        validarDados(nome,raca,idade,porte);
+        
         this.nome = nome;
         this.raca = raca;
         this.idade = idade;
@@ -51,7 +42,21 @@ public abstract class Animal {
 
         totalCadastrados++;
         this.id = totalCadastrados;
+        
     }
+
+    private static void validarDados(String nome, String raca, int idade, Porte porte) {
+    if (nome == null || nome.isBlank())
+        throw new DadoInvalidoException("O nome do animal não pode ser vazio.");
+    if (raca == null || raca.isBlank())
+        throw new DadoInvalidoException("A raça do animal não pode ser vazia.");
+    if (idade < 0)
+        throw new DadoInvalidoException("A idade do animal não pode ser negativa.");
+    if (porte == null)
+        throw new DadoInvalidoException("O porte do animal não pode ser vazio.");
+    }   
+
+    
 
     
     public abstract String getEspecie();
@@ -80,6 +85,14 @@ public abstract class Animal {
         }
         this.statusAdocao = StatusAdocao.DISPONIVEL;
         
+    }
+
+    public void atualizarDados(String nome, String raca, int idade, Porte porte) {
+        validarDados(nome, raca, idade, porte);  // primeiro valida
+        this.nome = nome;                         // só depois altera
+        this.raca = raca;
+        this.idade = idade;
+        this.porte = porte;
     }
 
     public static int getTotalCadastrados() { 

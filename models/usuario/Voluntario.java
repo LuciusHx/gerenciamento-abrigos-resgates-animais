@@ -6,6 +6,7 @@ import java.util.List;
 
 import excecao.DadoInvalidoException;
 import models.animal.Animal;
+import models.pessoa.Perfil;
 
 
 public class Voluntario extends Usuario {
@@ -51,5 +52,10 @@ public class Voluntario extends Usuario {
     public List<Animal> getAnimaisResponsavel(){
         List<Animal> animaisImutavel = Collections.unmodifiableList(animais);
         return animaisImutavel;
+    }
+
+    @Override
+    public Perfil getPerfil() {
+        return Perfil.VOLUNTARIO;
     }
 }
