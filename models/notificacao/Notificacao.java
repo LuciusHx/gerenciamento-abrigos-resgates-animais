@@ -1,12 +1,15 @@
 package models.notificacao;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import excecao.DadoInvalidoException;
 import util.Validacoes;
 
 public class Notificacao {
-    private final int id;
+    private static final DateTimeFormatter FORMATO = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     private static int contador = 0;
+
+    private final int id;
     private final TipoNotificacao tipo;
     private final String mensagem;
     private final LocalDateTime data; 
@@ -42,6 +45,6 @@ public class Notificacao {
 
     @Override 
     public String toString(){
-        return String.format("Id: %d | Tipo: %s | Mensagem: %s | Data: %s.", this.id, this.tipo, this.mensagem, this.data);
+        return String.format("[%s] #%d %s: %s", data.format(FORMATO), id, tipo, mensagem);
     }
 }

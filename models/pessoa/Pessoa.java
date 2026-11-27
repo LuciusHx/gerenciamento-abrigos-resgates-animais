@@ -47,8 +47,7 @@ public abstract class Pessoa {
 
     public void setTelefone(String telefone) {
         Validacoes.validarString(telefone, "telefone");
-        this.telefone = telefone;
-        
+        this.telefone = telefone; 
     }
 
     
