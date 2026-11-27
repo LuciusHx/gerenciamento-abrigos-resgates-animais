@@ -39,6 +39,9 @@ public class Administrador extends Usuario implements EmissorRelatorio{
     @Override
     public boolean podeGerenciarAtividades(){ return true; }
     
+    @Override
+    public boolean podePublicarAvisos(){ return true; }
+    
     @Override 
     public String emitirRelatorio(RelatorioServico servico){
         return servico.relatorioGeral();
