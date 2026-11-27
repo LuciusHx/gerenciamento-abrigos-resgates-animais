@@ -59,7 +59,7 @@ public class Main {
                     case 5:
                         sobre();
                         break;
-                    // B11
+                    
                     case 0:
                         executando = false;
                         break;
