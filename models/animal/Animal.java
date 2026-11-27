@@ -4,7 +4,6 @@ import java.util.List;
 import excecao.TratamentoCriticoException;
 import models.saude.HistoricoMedico;
 import excecao.DadoInvalidoException;
-import models.saude.HistoricoMedico;
 
 public abstract class Animal {
 

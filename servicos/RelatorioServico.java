@@ -12,6 +12,8 @@ import excecao.DadoInvalidoException;
 import models.adocao.Adocao;
 import models.animal.Animal;
 import models.usuario.Voluntario;
+import models.saude.HistoricoMedico;
+import models.saude.RegistroMedico;
 
 public class RelatorioServico {
     private final AnimalServico animalServico;
@@ -106,10 +108,74 @@ public class RelatorioServico {
     // b10
 
     public String relatorioSaude() {
-        return "";
+        StringBuilder sb = new StringBuilder();
+        sb.append("===== RELATÓRIO DE SAÚDE =====\n");
+
+        List<Animal> animais = animalServico.getAnimais();
+        if (animais.isEmpty()) {
+            sb.append("Nenhum animal cadastrado.\n");
+        }
+
+        for (Animal animal : animais) {
+            HistoricoMedico historico = animal.getHistoricoMedico();
+            sb.append("\n").append(animal).append("\n");
+            sb.append("  Estado de saúde: ").append(animal.getEstadoSaude()).append("\n");
+            anexarRegistros(sb, "Vacinas", historico.getVacinas());
+            anexarRegistros(sb, "Medicamentos ativos", historico.getMedicamentosAtivos());
+            anexarRegistros(sb, "Cirurgias", historico.getCirurgias());
+        }
+
+        sb.append("\n").append(relatorioAnimaisEmTratamento());
+        return sb.toString();
     }
 
+    // ----- relatório do administrador: foco em estatísticas -----
     public String relatorioGeral() {
-        return "";
+        StringBuilder sb = new StringBuilder();
+        sb.append("===== RELATÓRIO GERAL DO ABRIGO =====\n");
+        sb.append("Animais resgatados: ").append(getTotalAnimaisResgatados()).append("\n");
+        sb.append("Adoções realizadas: ").append(getTotalAdocoesRealizadas()).append("\n");
+        sb.append(String.format("Taxa de adoção do mês: %.1f%%%n", getTaxaAdocaoMensal() * 100));
+        sb.append("Voluntários ativos: ").append(getTotalVoluntariosAtivos()).append("\n");
+
+        sb.append("Espécies mais resgatadas:\n");
+        Map<String, Integer> especies = getEspeciesMaisResgatadas();
+        if (especies.isEmpty()) {
+            sb.append("  nenhuma\n");
+        }
+        for (Map.Entry<String, Integer> entrada : especies.entrySet()) {
+            sb.append("  - ").append(entrada.getKey()).append(": ").append(entrada.getValue()).append("\n");
+        }
+        return sb.toString();
+    }
+
+    // ----- animais em tratamento -----
+    public String relatorioAnimaisEmTratamento() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("===== ANIMAIS EM TRATAMENTO =====\n");
+
+        List<Animal> emTratamento = saudeServico.listarAnimaisEmTratamento();
+        if (emTratamento.isEmpty()) {
+            sb.append("Nenhum animal em tratamento.\n");
+        }
+        for (Animal animal : emTratamento) {
+            sb.append("  - ").append(animal.getNome())
+              .append(" (").append(animal.getEspecie()).append(") - ")
+              .append(animal.getEstadoSaude()).append("\n");
+        }
+        return sb.toString();
+    }
+
+    // cada registro se descreve sozinho: o polimorfismo escolhe o texto, sem instanceof
+    private void anexarRegistros(StringBuilder sb, String titulo, List<? extends RegistroMedico> registros) {
+        sb.append("  ").append(titulo).append(" (").append(registros.size()).append(")");
+        if (registros.isEmpty()) {
+            sb.append(": nenhum\n");
+            return;
+        }
+        sb.append(":\n");
+        for (RegistroMedico registro : registros) {
+            sb.append("    - ").append(registro.resumo()).append("\n");
+        }
     }
 }
