@@ -50,8 +50,10 @@ public class Medicamento extends RegistroMedico {
     }
     
     @Override
-    public String resumo(){
-        String periodoFim = (fim == null) ? "em andamento" : fim.toString();
-        return "Medicamento: " + nome + "| Dose: " + dose + "| Inicio: " + inicio + "| Fim: " + periodoFim + "| Veterinário: " + getVeterinario().getNome();
+    public String resumo() {
+        String periodoFim = (getFim() == null) ? "em andamento" : formatar(getFim());
+        return "Medicamento: " + getNome() + " | Dose: " + getDose()
+            + " | Início: " + formatar(getInicio()) + " | Fim: " + periodoFim
+            + " | Veterinário: " + getVeterinario().getNome();
     }
 }

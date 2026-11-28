@@ -3,6 +3,7 @@ package models.saude;
 
 import models.usuario.Veterinario;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import excecao.DadoInvalidoException;
 import util.*;
@@ -12,6 +13,9 @@ public abstract class RegistroMedico {
     private final LocalDate data;
     private final String descricao;
     private final Veterinario veterinario;
+    private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    
+    
 
     public abstract String resumo();
 
@@ -24,6 +28,15 @@ public abstract class RegistroMedico {
         this.data = data;
         this.descricao = descricao;
         this.veterinario = veterinario;
+    }
+
+    protected static String formatar(LocalDate data) {
+        return data.format(FORMATO_DATA);
+    }
+
+    @Override
+    public String toString() {
+        return resumo();
     }
     
 

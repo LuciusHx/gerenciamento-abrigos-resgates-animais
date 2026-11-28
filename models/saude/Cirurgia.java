@@ -27,7 +27,10 @@ public class Cirurgia extends RegistroMedico{
     }
 
     @Override
-    public String resumo(){
-        return "Data da cirurgia: " + getDataRegistro() + "| Nome veterinário responsável: " + getVeterinario().getNome() + "| Procedimento: " + getProcedimento() + "| Resultado: " + getResultado() + "|";
+    public String resumo() {
+        return "Cirurgia em " + formatar(getDataRegistro())
+            + " | Procedimento: " + getProcedimento()
+            + " | Resultado: " + getResultado()
+            + " | Veterinário: " + getVeterinario().getNome();
     }
 }

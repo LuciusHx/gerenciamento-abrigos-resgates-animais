@@ -40,8 +40,8 @@ public class Vacina extends RegistroMedico implements Agendavel{
 
     @Override
     public String resumo() {
-        return "Vacina: " + nome + " | Aplicada em: " + getDataRegistro()
-                + " | Próxima dose: " + proximaDose
-                + " | Veterinário: " + getVeterinario().getNome();
+        return "Vacina: " + nome + " | Aplicada em: " + formatar(getDataRegistro())
+            + " | Próxima dose: " + formatar(proximaDose)
+            + " | Veterinário: " + getVeterinario().getNome();
     }
 }

@@ -19,8 +19,10 @@ public class Consulta extends RegistroMedico{
     }
 
     @Override
-    public String resumo(){
-        return "Data da consulta: " + getDataRegistro() + "| Nome veterinário responsável: " + getVeterinario().getNome() + "| Diagnóstico: " +  getDiagnostico() + "|";
+    public String resumo() {
+        return "Consulta em " + formatar(getDataRegistro())
+            + " | Diagnóstico: " + getDiagnostico()
+            + " | Veterinário: " + getVeterinario().getNome();
     }
 
 
